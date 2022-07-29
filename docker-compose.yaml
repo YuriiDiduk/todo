@@ -1,0 +1,45 @@
+version: '3'
+services:
+  frontend:
+    build: ./client
+    container_name: todo-client11
+    ports:
+      - 4001:80
+   # environment:
+      # Username for the mongo database
+      #- MONGO_INITDB_ROOT_USERNAME=mern
+      # Password for the mongo database
+      #- MONGO_INITDB_ROOT_PASSWORD=mern
+
+    depends_on:
+      - backend
+  backend:
+    build: ./server
+    container_name: todo-server11
+    ports:
+      - 4000:4000
+    #environment:
+      # Username for the mongo database
+      #- MONGO_INITDB_ROOT_USERNAME=mern
+      # Password for the mongo database
+     # - MONGO_INITDB_ROOT_PASSWORD=mern
+
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo 
+    container_name: mongo4
+   # environment:
+      # Username for the mongo database
+    #  - MONGO_INITDB_ROOT_USERNAME=mern
+      # Password for the mongo database
+    #  - MONGO_INITDB_ROOT_PASSWORD=mern
+    volumes:
+      # <nameOfVolume>:<directorInDocker>
+      - mongoDB:/data/db
+    restart: always
+    ports:
+      - 27017:27017
+      
+volumes:
+  mongoDB:
